@@ -253,7 +253,6 @@ $app->log("Application started"); // Output: Log: Application started
 ## Namespace
 **Namespaces** in PHP help organize code and prevent name collisions in larger projects. They allow developers to group related classes and functions, making it easier to manage code when multiple items have the same name.
 ```php
-__index.php
 <?php
 
 namespace Animals;
@@ -268,7 +267,6 @@ $dog = new \Animals\Dog();
 echo $dog->sound(); // Outputs: Bark!
 ?>
 <?php
-__vehicles.php
 namespace Vehicles;
 
 class Car {
