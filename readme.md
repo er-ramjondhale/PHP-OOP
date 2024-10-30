@@ -19,7 +19,7 @@ OOP is a programming style in which we group methods and variables of a particul
 - [Namespace](#namespace)
 
 ## Class and Object
-__View__ (01%20Class%20and%20Object//index.php)
+ [ClassExample.php](01%20Class%20and%20Object//index.php)
 
 ### Class
 A **class** is a blueprint for objects, which are instances of a class. Classes group properties and methods related to an entity. Classes are used to group the code that handles a certain topic into one place. It is a template for creating objects, providing initial values for state (properties/attributes) and implementations of behavior (methods).
