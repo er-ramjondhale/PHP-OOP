@@ -17,7 +17,6 @@ OOP is a programming style in which we group methods and variables of a particul
 - [Abstract Class](#abstract-class)
 - [Traits](#traits)
 - [Namespace](#namespace)
-- [Autoload](#autoload)
 
 ## Class and Object
 
@@ -124,60 +123,20 @@ Encapsulation restricts direct access to object properties, ensuring control thr
 ```php
 <?php
 class BankAccount {
-    // Private property to hold the account balance
-    private $balance;
+    private $balance = 0;
 
-    // Constructor to initialize the balance
-    public function __construct($initialBalance) {
-        if ($initialBalance < 0) {
-            throw new Exception("Initial balance cannot be negative.");
-        }
-        $this->balance = $initialBalance;
-    }
-
-    // Getter for balance
-    public function getBalance() {
-        return $this->balance;
-    }
-
-    // Method to deposit money
     public function deposit($amount) {
-        if ($amount <= 0) {
-            throw new Exception("Deposit amount must be positive.");
-        }
         $this->balance += $amount;
     }
 
-    // Method to withdraw money
-    public function withdraw($amount) {
-        if ($amount <= 0) {
-            throw new Exception("Withdrawal amount must be positive.");
-        }
-        if ($amount > $this->balance) {
-            throw new Exception("Insufficient funds.");
-        }
-        $this->balance -= $amount;
+    public function getBalance() {
+        return $this->balance;
     }
 }
-// Usage
-try {
-    // Create a new BankAccount with an initial balance
-    $account = new BankAccount(1000);
-    echo "Initial Balance: $" . $account->getBalance() . "\n";
-   
-   // Deposit money
-    $account->deposit(500);
-    echo "After Deposit: $" . $account->getBalance() . "\n";
-   
-   // Withdraw money
-    $account->withdraw(300);
-    echo "After Withdrawal: $" . $account->getBalance() . "\n";
-   
-   // Attempting to withdraw more than the balance
-    $account->withdraw(1500);
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
+
+$account = new BankAccount();
+$account->deposit(100);
+echo $account->getBalance(); // Output: 100
 ?>
 ```
 
@@ -185,73 +144,71 @@ try {
 Put simply, Polymorphism is a principle that state that methods in different classes doing similar things should have the same name.
 ```php
 <?php
-// Base class
-abstract class Payment {
-    protected $amount;
-
-    public function __construct($amount) {
-        $this->amount = $amount;
-    }
-
-    // Abstract method to be implemented by subclasses
-    abstract public function processPayment();
+interface Animal {
+    public function sound();
 }
 
-// Subclass for Credit Card Payment
-class CreditCardPayment extends Payment {
-    private $cardNumber;
-
-    public function __construct($amount, $cardNumber) {
-        parent::__construct($amount);
-        $this->cardNumber = $cardNumber;
-    }
-
-    public function processPayment() {
-        return "Processing credit card payment of $" . $this->amount . " using card number: " . $this->cardNumber;
+class Cat implements Animal {
+    public function sound() {
+        return "Meow";
     }
 }
 
-// Subclass for PayPal Payment
-class PayPalPayment extends Payment {
-    private $email;
-
-    public function __construct($amount, $email) {
-        parent::__construct($amount);
-        $this->email = $email;
-    }
-
-    public function processPayment() {
-        return "Processing PayPal payment of $" . $this->amount . " using email: " . $this->email;
+class Dog implements Animal {
+    public function sound() {
+        return "Bark";
     }
 }
 
-// Function to demonstrate polymorphism in payment processing
-function executePayment(Payment $payment) {
-    echo $payment->processPayment() . "\n";
+function makeSound(Animal $animal) {
+    echo $animal->sound();
 }
 
-// Usage
-$creditCardPayment = new CreditCardPayment(150, '1234-5678-9012-3456');
-$paypalPayment = new PayPalPayment(75, 'user@example.com');
-
-// Executing payments
-executePayment($creditCardPayment); // Outputs: Processing credit card payment of $150 using card number: 1234-5678-9012-3456
-executePayment($paypalPayment); // Outputs: Processing PayPal payment of $75 using email: user@example.com
+$cat = new Cat();
+$dog = new Dog();
+makeSound($cat); // Output: Meow
+makeSound($dog); // Output: Bark
 ?>
 ```
 
 ## Interface
-Interfaces define a contract that implementing classes must follow. They can declare methods that must be implemented without defining how they are implemented. An interface can be seen as an outline of what a particular object can do. They are considered one of the main building blocks of the SOLID pattern. With interfaces we can create code which specifies which methods a class must implement, without having to define how these methods are implemented.
+An interface can be seen as an outline of what a particular object can do. They are considered one of the main building blocks of the SOLID pattern. With interfaces we can create code which specifies which methods a class must implement, without having to define how these methods are implemented.
 ```php
 <?php
-// Define the Shape interface
-interface Shape {
-    public function area(); // Method to calculate the area
-    public function perimeter(); // Method to calculate the perimeter
+interface Logger {
+    public function log($message);
 }
 
-// Implementing the Circle class
-class Circle implements Shape {
+class FileLogger implements Logger {
+    public function log($message) {
+        echo "Logging to file: $message";
+    }
+}
+
+class ConsoleLogger implements Logger {
+    public function log($message) {
+        echo "Logging to console: $message";
+    }
+}
+
+$logger = new FileLogger();
+$logger->log("An error occurred"); // Output: Logging to file: An error occurred
+?>
+```
+## Abstract Class
+They can contain abstract methods that must be defined in derived classes. Put simply, an abstract class is a class with at least one abstract method and with a abstract keyword in front of it. They get used for multiple reasons:
+
+1. When we want be commit to writing certain class methods, or when we are only sure of there names.
+2. When we want child classes to define these methods.
+
+Abstract classes cannot be instantiated, and whatever non-abstract class derived from it must include actual implementations of all inherited abstract methods and properties.
+```php
+<?php
+abstract class Shape {
+    abstract public function area();
+}
+
+class Circle extends Shape {
     private $radius;
 
     public function __construct($radius) {
@@ -259,55 +216,69 @@ class Circle implements Shape {
     }
 
     public function area() {
-        return pi() * ($this->radius ** 2);
-    }
-
-    public function perimeter() {
-        return 2 * pi() * $this->radius;
+        return pi() * $this->radius * $this->radius;
     }
 }
 
-// Implementing the Rectangle class
-class Rectangle implements Shape {
-    private $width;
-    private $height;
-
-    public function __construct($width, $height) {
-        $this->width = $width;
-        $this->height = $height;
-    }
-
-    public function area() {
-        return $this->width * $this->height;
-    }
-
-    public function perimeter() {
-        return 2 * ($this->width + $this->height);
-    }
-}
-
-// Function to demonstrate polymorphism with the Shape interface
-function printShapeDetails(Shape $shape) {
-    echo "Area: " . $shape->area() . "\n";
-    echo "Perimeter: " . $shape->perimeter() . "\n";
-}
-// Usage
 $circle = new Circle(5);
-$rectangle = new Rectangle(4, 6);
-// Print details for each shape
-printShapeDetails($circle); // Outputs the area and perimeter of the circle
-printShapeDetails($rectangle); // Outputs the area and perimeter of the rectangle
+echo $circle->area(); // Output: 78.539816339744
 ?>
 ```
-## Abstract Class
-Abstract classes cannot be instantiated and are used to provide a base structure for other classes. They can contain abstract methods that must be defined in derived classes. Put simply, an abstract class is a class with at least one abstract method and with a abstract keyword in front of it. They get used for multiple reasons:
-1. When we want be commit to writing certain class methods, or when we are only sure of there names.
-2. When we want child classes to define these methods.
-Abstract classes cannot be instantiated, and whatever non-abstract class derived from it must include actual implementations of all inherited abstract methods and properties.
 
-
-| Interface                                                                       | Abstract Class                                                                 |
+| **Interface**                                                                   | **Abstract Class**                                                             |
 |---------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
 |An interface cannot have concrete methods in it i.e. methods with definition.    | An abstract class can have both abstract methods and concrete methods in it.   |
 | All methods declared in interface should be public                              |An abstract class can have public, private and protected etc methods.           |
 | Multiple interfaces can be implemented by one class.                            | One class can extend only one abstract class.                                  |
+
+## Traits
+**Traits** are a mechanism for code reuse. A Trait is intended to reduce some limitations of single inheritance by enabling a developer to reuse sets of methods freely in several independent classes living in different class hierarchies.
+A Trait is similar to a class, but only intended to group functionality in a fine-grained and consistent way. It is not possible to instantiate a Trait on its own.
+```php
+<?php
+trait Loggable {
+    public function log($message) {
+        echo "Log: $message";
+    }
+}
+class App {
+    use Loggable;
+}
+$app = new App();
+$app->log("Application started"); // Output: Log: Application started
+?>
+```
+
+
+## Namespace
+**Namespaces** in PHP help organize code and prevent name collisions in larger projects. They allow developers to group related classes and functions, making it easier to manage code when multiple items have the same name.
+```php
+__ index.php
+<?php
+
+namespace Animals;
+
+class Dog {
+    public function sound() {
+        return "Bark!";
+    }
+}
+// Using the classes
+$dog = new \Animals\Dog();
+echo $dog->sound(); // Outputs: Bark!
+?>
+<?php
+__ vehicles.php
+namespace Vehicles;
+
+class Car {
+    public function honk() {
+        return "Beep!";
+    }
+}
+
+
+$car = new \Vehicles\Car();
+echo $car->honk(); // Outputs: Beep!
+?>
+```
