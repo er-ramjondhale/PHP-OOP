@@ -46,7 +46,7 @@ echo $car->getCarInfo(); // Make: Toyota, Model: Camry
 
 ## Constructor and Destructor 
  [index.php](02-Constructor-and-Destructor/index.php)
- 
+
 A constructor is a special method that automatically executes when an object is created. It is used to initialize object properties. A destructor is a method called when an object is destroyed, useful for cleanup tasks.
 ```php
 <?php
@@ -73,6 +73,8 @@ echo $car->getCarInfo(); // Output: Make: Toyota, Model: Camry
 ```
 
 ## Access Modifiers
+ [index.php](03-Access-Modifier/index.php)
+
 Access Modifiers define the visibility of properties and methods within a class:
 - **public:** Accessible from anywhere.
 - **protected:** Accessible within the class and subclasses.
@@ -101,6 +103,8 @@ echo $user->getEmail(); // Output: john@example.com
 ```
 
 ## Inheritance
+[index.php](04-Inheritance/index.php)
+
 Inheritance is central concept in OOP, they enable us to reduce code duplications by creating a parent/master class with properties and method that can be inherited by child classes. In php, and many other languages, we use extends keyword to inherit from another class.
 ```php
 <?php
@@ -122,6 +126,8 @@ echo $dog->speak(); // Output: Bark
 ```
 
 ## Encapsulation
+ [index.php](05-encapsulation/index.php)
+
 Encapsulation restricts direct access to object properties, ensuring control through getters and setters.
 ```php
 <?php
@@ -144,6 +150,8 @@ echo $account->getBalance(); // Output: 100
 ```
 
 ## Polymorphism
+ [index.php](06-polymorphism/index.php)
+
 Put simply, Polymorphism is a principle that state that methods in different classes doing similar things should have the same name.
 ```php
 <?php
@@ -175,6 +183,8 @@ makeSound($dog); // Output: Bark
 ```
 
 ## Interface
+[index.php](07-interface/index.php)
+
 An interface can be seen as an outline of what a particular object can do. They are considered one of the main building blocks of the SOLID pattern. With interfaces we can create code which specifies which methods a class must implement, without having to define how these methods are implemented.
 ```php
 <?php
@@ -199,6 +209,8 @@ $logger->log("An error occurred"); // Output: Logging to file: An error occurred
 ?>
 ```
 ## Abstract Class
+[index.php](08-abstract/index.php)
+
 They can contain abstract methods that must be defined in derived classes. Put simply, an abstract class is a class with at least one abstract method and with a abstract keyword in front of it. They get used for multiple reasons:
 
 1. When we want be commit to writing certain class methods, or when we are only sure of there names.
@@ -235,6 +247,8 @@ echo $circle->area(); // Output: 78.539816339744
 | Multiple interfaces can be implemented by one class.                            | One class can extend only one abstract class.                                  |
 
 ## Traits
+[index.php](09-traits/index.php)
+
 **Traits** are a mechanism for code reuse. A Trait is intended to reduce some limitations of single inheritance by enabling a developer to reuse sets of methods freely in several independent classes living in different class hierarchies.
 A Trait is similar to a class, but only intended to group functionality in a fine-grained and consistent way. It is not possible to instantiate a Trait on its own.
 ```php
@@ -254,6 +268,8 @@ $app->log("Application started"); // Output: Log: Application started
 
 
 ## Namespace
+[index.php](10-namespace)
+
 **Namespaces** in PHP help organize code and prevent name collisions in larger projects. They allow developers to group related classes and functions, making it easier to manage code when multiple items have the same name.
 ```php
 <?php
