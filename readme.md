@@ -38,12 +38,12 @@ class Car {
     }
 }
 
-$car = new Car("Toyota", "Camry");
+$car = new Car("Toyota", "Camry"); // define object
 echo $car->getCarInfo(); // Make: Toyota, Model: Camry
 ?>
 ```
 
-## Constructor and destructor
+## Constructor and Destructor
 A constructor is a special method that automatically executes when an object is created. It is used to initialize object properties. A destructor is a method called when an object is destroyed, useful for cleanup tasks.
 ```php
 <?php
