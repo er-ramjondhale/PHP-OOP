@@ -45,7 +45,8 @@ echo $car->getCarInfo(); // Make: Toyota, Model: Camry
 ```
 
 ## Constructor and Destructor 
-[view] (02-Constructor-and-Destructor/index.php)
+ [index.php](02-Constructor-and-Destructor/index.php)
+ 
 A constructor is a special method that automatically executes when an object is created. It is used to initialize object properties. A destructor is a method called when an object is destroyed, useful for cleanup tasks.
 ```php
 <?php
