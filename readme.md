@@ -266,6 +266,8 @@ class Dog {
 $dog = new \Animals\Dog();
 echo $dog->sound(); // Outputs: Bark!
 ?>
+
+
 <?php
 namespace Vehicles;
 
